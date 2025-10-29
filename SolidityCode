@@ -1,0 +1,25 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract ProductVerification {
+    struct Product {
+        string name;
+        string manufacturer;
+        bool isGenuine;
+    }
+
+    mapping(string => Product) public products;
+
+    function addProduct(string memory _id, string memory _name, string memory _manufacturer) public {
+        products[_id] = Product(_name, _manufacturer, true);
+    }
+
+    function verifyProduct(string memory _id) public view returns (string memory, string memory, bool) {
+        Product memory product = products[_id];
+        return (product.name, product.manufacturer, product.isGenuine);
+    }
+
+    function isFake(string memory _id) public view returns (bool) {
+        return !products[_id].isGenuine;
+    }
+}
